@@ -1,0 +1,86 @@
+# ============================================================
+#  SeeFlix (ww4.seeflix.to) ad & tracker blocklist for Pi-hole
+#  Built from live crawl of ww4.seeflix.to, /home, movie pages
+#  and every video embed server the site rotates through.
+#  Format: one domain per line. Comments start with #.
+#  Updated: 2026-10-01
+# ============================================================
+
+# ------------------------------------------------------------
+# SECTION 1 - Ad injection on SeeFlix itself (SAFE to block)
+#   PropellerAds-style popunder/clickunder scripts injected
+#   into the <head> and footer of EVERY page of the site.
+#   These are the "click anywhere = popup/tabjack" scripts.
+# ------------------------------------------------------------
+so.espartocourtin.com
+dw.althinglogans.com
+ey.hecubawasho.com
+
+# ------------------------------------------------------------
+# SECTION 2 - Ad networks used by the embedded video players
+#   (SAFE to block - these are pure ad/tracking hosts)
+# ------------------------------------------------------------
+# Adsterra (social bar / popunder SDK loaded by vidara.to player)
+acscdn.com
+# Popup smartlink opened on every click by vidara.to AND
+# netwara.xyz players (invisible overlay click-hijack)
+geniusdexchange.com
+# vidara.to's failover/ad mirror domain
+sgoabjgio.com
+# Zplay player telemetry
+mc.yandex.ru
+# Player analytics trackers
+umami.vidcore.net
+stats.peachify.top
+# Google Analytics/Tag Manager used by vidcore + Zplay players
+googletagmanager.com
+
+# ------------------------------------------------------------
+# SECTION 3 - Popup redirect landing hosts served by the
+#   netwara.xyz "sbx.js" rotating popunder loader.
+#   It generates a NEW subdomain every few hours (hash of the
+#   date + random string) on these TLDs, e.g.
+#   https://x3k9f2....cfd/sAbCdEf/VgMoO
+#   Static domains cannot cover these. Option A: block the
+#   abusive TLDs below (very aggressive - .cfd/.rest are
+#   overwhelmingly spam/ad infrastructure anyway). Option B:
+#   add the Pi-hole REGEX filters listed in the README notes.
+# ------------------------------------------------------------
+# !! Aggressive - uncomment to block whole TLDs !!
+# cfd
+# rest
+# cyo9
+
+# ------------------------------------------------------------
+# SECTION 4 - Third-party video servers that are saturated
+#   with ads/popunders. Blocking these BREAKS that playback
+#   server (Pi-hole cannot separate player from its ads).
+#   Block if you want maximum ad removal; the site's players
+#   will fall back to whichever server remains unblocked.
+# ------------------------------------------------------------
+# Vidsrc server (Adsterra + click popups + VAST ads)
+vidara.to
+vidara.so
+# Zplay server (Yandex tracking)
+p2pplay.pro
+# Vidplay server (click-hijack overlay + rotating popunders)
+netwara.xyz
+play.netwara.xyz
+# Vidcore server (hecubawasho injector)
+vidcore.net
+vidcore.io
+# Videasy server
+player.videasy.net
+# Peachify server (currently the cleanest - only analytics)
+# peachify.top
+
+# ------------------------------------------------------------
+# SECTION 5 - The streaming sites themselves
+#   NOT ads. Uncomment ONLY if you want to block access to
+#   the piracy sites entirely (e.g. parental control).
+# ------------------------------------------------------------
+# seeflix.to
+# ww4.seeflix.to
+# fastflix.to
+# arcflix.co
+# peachify.top
